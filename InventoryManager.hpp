@@ -21,7 +21,7 @@ class InventoryManager{
         InventoryManager(); //empty constructor.
         InventoryManager(const std::vector<Item>& items); //Item-type vector-reference receiving constructor.
         //
-        std::string listItems() const;
+        std::string listItems();
         void borrowItem(int itemId, const std::string& username);
         void returnItem(int itemId, const std::string& username);
         void waitUntilAvailable(int itemId, const std::string& username);

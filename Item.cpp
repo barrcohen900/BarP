@@ -42,7 +42,7 @@ void Item::returnBack(const std::string& username){
     borrowedBy="";
 }
 std::string Item::toString() const{
-    return "Item ID: " + std::to_string(id) + ", Name: " + name + ", Available: " + (isBorrowed ? "No" : "Yes") + (isBorrowed ? ", Borrowed by: " + borrowedBy : "");
+    return std::to_string(id) + " " + name + " " + (isBorrowed ? "BORROWED by= "+borrowedBy : "FREE");
 }
 
 
