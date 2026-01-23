@@ -92,6 +92,7 @@ void client_thread(std::string server_ip, int port)
     }
     close(fd); // close the socket
 }
+// argc: argument count,argv : argument vector for us argv[0] is the program name,argv[1] is the server IP, argv[2] is the server port 
 int main(int argc, char *argv[])
 {
     if (argc != 3)
@@ -99,9 +100,7 @@ int main(int argc, char *argv[])
         std::cerr << "Usage: client\n";
         return 1;
     }
-    // argv[0] is the program name
-    // argv[1] is the server IP
-    // argv[2] is the server port
+   
     std::string server_ip = argv[1];
     int server_port = std::stoi(argv[2]);
     client_thread(server_ip,server_port);

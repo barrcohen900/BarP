@@ -8,8 +8,7 @@
 #include <mutex>
 #include <condition_variable>
 #include "InventoryManager.hpp"
-#include <cerrno>
-#include <stdexcept>
+
 
 // Read one line until '\n'
 bool recv_line(int fd, std::string& out) {
@@ -38,7 +37,7 @@ void send_all(int fd, const std::string& msg) {
     }
 
 }
-// Check if a string is a number
+// Check if a string is a number 
 bool is_number(const std::string& s) {
     for (char c : s) {
         if (!isdigit(c)) return false;
@@ -94,7 +93,6 @@ void handle_client(int client_fd, InventoryManager& inventory) {
                 }
                 
                     
-           
                 }  
                 // If the user is not authorized helps us to avoid to "skip" the HELLO command
                 else if(!is_authenticated){
@@ -182,7 +180,7 @@ void handle_client(int client_fd, InventoryManager& inventory) {
 
         
 
-
+// argc: argument count,argv : argument vector for us argv[0] is the program name, argv[1] is the port number
 int main(int argc, char *argv[]){
     if(argc!=2){
         std::cerr<<"Usage: server port\n";
@@ -192,16 +190,25 @@ int main(int argc, char *argv[]){
     // Create InventoryManager instance
     InventoryManager items;
     // Set up server socket
-    int server_fd = socket(AF_INET, SOCK_STREAM, 0);
+    int server_fd = socket(AF_INET, SOCK_STREAM, 0); //server-File-Descriptor(on linux OS).
+    //domain: AF_INET(AF = address family) = Internet Domain (AF_INET): The standard for network sockets, 
+    //using IP addresses and port numbers to communicate across different machines over protocols like TCP/IP(IPv4 in our case).
+    //
+    //SOCK_STREAM = a socket type that provides reliable, ordered, and error-checked data delivery -
+    //through a connection-oriented byte stream, primarily using the TCP protocol.
+    //
+    //protocol: 0 = Default Protocol: Because you requested a stream socket over IPv4, the OS defaults to TCP (IPPROTO_TCP).
+
     // Set socket options to reuse address and port
     sockaddr_in addr{};
     addr.sin_family = AF_INET;
     addr.sin_addr.s_addr = htonl(INADDR_ANY);
     addr.sin_port = htons(port);
-    // binding the socket
+
+    //bind input structure:
+    //bind(socket_descriptor, pointer_to_struct, size_of_struct)
     bind(server_fd, (sockaddr*)&addr, sizeof(addr));
-         // 3: (binding to the socket):
-    //-----
+         
     
     
     listen(server_fd, 10);
@@ -209,12 +216,15 @@ int main(int argc, char *argv[]){
     std::cout << "Server listening on port" <<port << std::endl;
     // Accept and handle client connections
     while (true) {
+
         // Accept a new client connection
         int client_fd = accept(server_fd, nullptr, nullptr);
+
         // Create a new thread to handle the client
         std::thread(handle_client, client_fd, std::ref(items)).detach();
     }
     // close The server socket
+
     close(server_fd);
     return 0;
     
