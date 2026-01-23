@@ -49,6 +49,11 @@ void client_thread(){
     }
     std::string st;
 
+    std::string reply;
+    if (recv_line(fd, reply)) {
+        std::cout << reply << std::endl;
+    }
+
     while(true){
         // Get user input(command)
         std::getline(std::cin,st);
