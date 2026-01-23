@@ -49,10 +49,10 @@ void client_thread(){
     }
     std::string st;
 
-    std::string reply;
-    if (recv_line(fd, reply)) {
-        std::cout << reply << std::endl;
-    }
+    // std::string reply;
+    // if (recv_line(fd, reply)) {
+    //     std::cout << reply << std::endl;
+    // } DOESNT WORK
 
     while(true){
         // Get user input(command)
