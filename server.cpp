@@ -158,7 +158,7 @@ void handle_client(int client_fd, InventoryManager& inventory) {
                         itemID=std::stoi(arg);
                         // the thread will wait until the item is available its not good in the real life scenario but for this project is ok(can make a long queue )
                         inventory.waitUntilAvailable(itemID,username);
-                        send_all(client_fd, "OK WAIT "+std::to_string(itemID)+"\n");
+                        send_all(client_fd, "OK AVAILABLE "+std::to_string(itemID)+"\n");
                     }
                     catch(const std::invalid_argument&){
                         send_all(client_fd, "ERR PROTOCOL invalid_id\n");
