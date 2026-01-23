@@ -56,9 +56,13 @@ void client_thread(){
         // Send command to server
         send_all(fd,st);
         
-
+        if(st=="QUIT\n"){
+            break; // exit the client if the command is exit
+        }
     }
-}
+        close(fd); // close the socket
+    
+    }
 int main(){
     client_thread();
     return 0;

@@ -182,7 +182,7 @@ void handle_client(int client_fd, InventoryManager& inventory) {
         
 
 
-int main(int argc, char *argv){
+int main(){
     // Create InventoryManager instance
     InventoryManager items;
     // Set up server socket
