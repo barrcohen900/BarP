@@ -8,7 +8,8 @@
 #include <mutex>
 #include <condition_variable>
 #include "InventoryManager.hpp"
-
+#include <cerrno>
+#include <stdexcept>
 
 // Read one line until '\n'
 bool recv_line(int fd, std::string& out) {
@@ -182,7 +183,12 @@ void handle_client(int client_fd, InventoryManager& inventory) {
         
 
 
-int main(){
+int main(int argc, char *argv[]){
+    if(argc!=2){
+        std::cerr<<"Usage: server port\n";
+        return 1;
+    }
+    int port=std::stoi(argv[1]);
     // Create InventoryManager instance
     InventoryManager items;
     // Set up server socket
@@ -191,14 +197,16 @@ int main(){
     sockaddr_in addr{};
     addr.sin_family = AF_INET;
     addr.sin_addr.s_addr = htonl(INADDR_ANY);
-    addr.sin_port = htons(8080);
+    addr.sin_port = htons(port);
     // binding the socket
     bind(server_fd, (sockaddr*)&addr, sizeof(addr));
+         // 3: (binding to the socket):
+    //-----
     
-    //  Start listening for incoming connections(10 is the max)(leon said that ben told him to do 20 we need to check with him)
+    
     listen(server_fd, 10);
 
-    std::cout << "Server listening on port 5555\n";
+    std::cout << "Server listening on port" <<port << std::endl;
     // Accept and handle client connections
     while (true) {
         // Accept a new client connection

@@ -3,7 +3,7 @@
 
 //Constructors:
 InventoryManager::InventoryManager(){
-    std::vector<Item> items;
+    // 
     items.emplace_back(1, "Camera");
     items.emplace_back(2, "Tripod");
     items.emplace_back(3, "Laptop");
